@@ -1,5 +1,5 @@
 import express from 'express';
-import dotenv from 'dotenv';
+
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -10,8 +10,19 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
 import errorHandler from './middlewares/error.middleware.js';
 
-// Load env vars
-dotenv.config();
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load env vars (EXPLICIT PATH)
+dotenv.config({
+  path: path.join(__dirname, '.env'),
+});
+
+console.log('ACCESS_TOKEN_SECRET =>', process.env.ACCESS_TOKEN_SECRET);
 
 // App init
 const app = express();
